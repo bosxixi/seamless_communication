@@ -81,15 +81,17 @@ asset_store.metadata_providers.append(InProcAssetMetadataProvider(demo_metadata)
 
 LANGUAGE_NAME_TO_CODE = {v: k for k, v in LANGUAGE_CODE_TO_NAME.items()}
 
-print("begin of is_available:")
+print("begin of is_available2:")
 
-if torch.cuda.is_available():
-    device = torch.device("cuda:0")
-    dtype = torch.float16
-else:
-    device = torch.device("cpu")
-    dtype = torch.float32
+# if torch.cuda.is_available():
+#     device = torch.device("cuda:0")
+#     dtype = torch.float16
+# else:
+#     device = torch.device("cpu")
+#     dtype = torch.float32
 
+device = torch.device("cpu")
+dtype = torch.float32
 
 MODEL_NAME = "seamless_expressivity"
 VOCODER_NAME = "vocoder_pretssel"

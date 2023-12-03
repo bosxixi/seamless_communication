@@ -81,6 +81,7 @@ asset_store.metadata_providers.append(InProcAssetMetadataProvider(demo_metadata)
 
 LANGUAGE_NAME_TO_CODE = {v: k for k, v in LANGUAGE_CODE_TO_NAME.items()}
 
+print("begin of is_available:")
 
 if torch.cuda.is_available():
     device = torch.device("cuda:0")
@@ -105,6 +106,9 @@ unit_tokenizer = load_unity_unit_tokenizer(MODEL_NAME)
 _gcmvn_mean, _gcmvn_std = load_gcmvn_stats(VOCODER_NAME)
 gcmvn_mean = torch.tensor(_gcmvn_mean, device=device, dtype=dtype)
 gcmvn_std = torch.tensor(_gcmvn_std, device=device, dtype=dtype)
+
+
+print("begin of Translator:")
 
 translator = Translator(
     MODEL_NAME,
@@ -131,12 +135,16 @@ m4t_text_generation_opts = SequenceGeneratorOptions(
     ),
 )
 
+print("begin of PretsselGenerator:")
+
 pretssel_generator = PretsselGenerator(
     VOCODER_NAME,
     vocab_info=unit_tokenizer.vocab_info,
     device=device,
     dtype=dtype,
 )
+
+print("begin of AudioDecoder:")
 
 decode_audio = AudioDecoder(dtype=torch.float32, device=device)
 
@@ -247,11 +255,11 @@ def run(
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='TTS parameters')
+    parser = argparse.ArgumentParser(description='parameters')
     parser.add_argument('--i', type=str, default="/app/input_audio.wav")
     parser.add_argument('--t', type=str, default="cmn")
     parser.add_argument('--s', type=str, default="fra")
     args = parser.parse_args()
 
-    print("begin of rune:")
-    run(args.i, args.t, args.s)
+    print("begin of run:")
+    run(args.i, args.s, args.t)

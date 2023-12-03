@@ -9,6 +9,7 @@ import os
 import pathlib
 import tempfile
 import sys
+import argparse
 
 import gradio as gr
 import torch
@@ -186,11 +187,14 @@ def run(
     source_language: str,
     target_language: str,
 ) -> tuple[str, str]:
+    
+    print(target_language)
+    print(source_language)
+
     target_language_code = LANGUAGE_NAME_TO_CODE[target_language]
     source_language_code = LANGUAGE_NAME_TO_CODE[source_language]
 
-    print(target_language_code)
-    print(source_language_code)
+
 
     preprocess_audio(input_audio_path)
 
@@ -296,4 +300,10 @@ with gr.Blocks(css="style.css") as demo:
     )
 
 if __name__ == "__main__":
-    demo.queue(max_size=50).launch()
+    parser = argparse.ArgumentParser(description='TTS parameters')
+    parser.add_argument('--i', type=str, default="/app/input_audio.wav")
+    parser.add_argument('--t', type=str, default="cmn")
+    parser.add_argument('--s', type=str, default="fre")
+    args = parser.parse_args()
+
+    run(args.i, args.t, args.s)

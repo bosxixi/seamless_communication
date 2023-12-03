@@ -196,6 +196,7 @@ def run(
     input_audio_path: str,
     source_language_code: str,
     target_language_code: str,
+    outputWavFile: str,
 ) -> tuple[str, str]:
     
     # target_language_code = LANGUAGE_NAME_TO_CODE[target_language]
@@ -240,20 +241,19 @@ def run(
         prosody_encoder_input=prosody_encoder_input,
     )
 
-    with tempfile.NamedTemporaryFile(suffix=".wav", delete=False) as f:
-        torchaudio.save(
-            f.name,
-            speech_output.audio_wavs[0][0].to(torch.float32).cpu(),
-            sample_rate=speech_output.sample_rate,
-        )
+    torchaudio.save(
+        outputWavFile,
+        speech_output.audio_wavs[0][0].to(torch.float32).cpu(),
+        sample_rate=speech_output.sample_rate,
+    )
 
     text_out = remove_prosody_tokens_from_text(str(text_output[0]))
 
-    print("the file name is: " + f.name)
+    print("the file name is: " + outputWavFile)
     print("the text out is: " + text_out)
 
     sys.exit()
-    return f.name, text_out
+    return outputWavFile, text_out
 
 
 if __name__ == "__main__":
@@ -261,7 +261,8 @@ if __name__ == "__main__":
     parser.add_argument('--i', type=str, default="/app/input_audio.wav")
     parser.add_argument('--t', type=str, default="cmn")
     parser.add_argument('--s', type=str, default="eng")
+    parser.add_argument('--o', type=str, default=None)
     args = parser.parse_args()
 
     print("begin of run:")
-    run(args.i, args.s, args.t)
+    run(args.i, args.s, args.t, args.o)

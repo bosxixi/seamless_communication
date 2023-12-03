@@ -8,6 +8,7 @@
 import os
 import pathlib
 import tempfile
+import sys
 
 import gradio as gr
 import torch
@@ -188,6 +189,9 @@ def run(
     target_language_code = LANGUAGE_NAME_TO_CODE[target_language]
     source_language_code = LANGUAGE_NAME_TO_CODE[source_language]
 
+    print(target_language_code)
+    print(source_language_code)
+
     preprocess_audio(input_audio_path)
 
     with pathlib.Path(input_audio_path).open("rb") as fb:
@@ -234,6 +238,10 @@ def run(
 
     text_out = remove_prosody_tokens_from_text(str(text_output[0]))
 
+    print("the file name is: " + f.name)
+    print("the text out is: " + text_out)
+
+    sys.exit()
     return f.name, text_out
 
 

@@ -44,8 +44,9 @@ DESCRIPTION = """\
 """
 
 CACHE_EXAMPLES = os.getenv("CACHE_EXAMPLES") == "1" and torch.cuda.is_available()
-
+print CACHE_EXAMPLES
 CHECKPOINTS_PATH = pathlib.Path(os.getenv("CHECKPOINTS_PATH", "/home/user/app/models"))
+print CHECKPOINTS_PATH
 if not CHECKPOINTS_PATH.exists():
     snapshot_download(repo_id="facebook/seamless-expressive", repo_type="model", local_dir=CHECKPOINTS_PATH)
     snapshot_download(repo_id="facebook/seamless-m4t-v2-large", repo_type="model", local_dir=CHECKPOINTS_PATH)

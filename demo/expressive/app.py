@@ -184,15 +184,15 @@ def preprocess_audio(input_audio_path: str) -> None:
 
 def run(
     input_audio_path: str,
-    source_language: str,
-    target_language: str,
+    source_language_code: str,
+    target_language_code: str,
 ) -> tuple[str, str]:
     
     print(target_language)
     print(source_language)
 
-    target_language_code = LANGUAGE_NAME_TO_CODE[target_language]
-    source_language_code = LANGUAGE_NAME_TO_CODE[source_language]
+    # target_language_code = LANGUAGE_NAME_TO_CODE[target_language]
+    # source_language_code = LANGUAGE_NAME_TO_CODE[source_language]
 
 
 

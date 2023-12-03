@@ -188,9 +188,6 @@ def run(
     target_language_code: str,
 ) -> tuple[str, str]:
     
-    print(target_language)
-    print(source_language)
-
     # target_language_code = LANGUAGE_NAME_TO_CODE[target_language]
     # source_language_code = LANGUAGE_NAME_TO_CODE[source_language]
 
@@ -249,56 +246,6 @@ def run(
     return f.name, text_out
 
 
-TARGET_LANGUAGE_NAMES = [
-    "English",
-    "French",
-    "German",
-    "Spanish",
-]
-
-with gr.Blocks(css="style.css") as demo:
-    gr.Markdown(DESCRIPTION)
-    gr.DuplicateButton(
-        value="Duplicate Space for private use",
-        elem_id="duplicate-button",
-        visible=os.getenv("SHOW_DUPLICATE_BUTTON") == "1",
-    )
-    with gr.Row():
-        with gr.Column():
-            with gr.Group():
-                input_audio = gr.Audio(label="Input speech", type="filepath")
-                source_language = gr.Dropdown(
-                    label="Source language",
-                    choices=TARGET_LANGUAGE_NAMES,
-                    value="English",
-                )
-                target_language = gr.Dropdown(
-                    label="Target language",
-                    choices=TARGET_LANGUAGE_NAMES,
-                    value="French",
-                )
-            btn = gr.Button()
-        with gr.Column():
-            with gr.Group():
-                output_audio = gr.Audio(label="Translated speech")
-                output_text = gr.Textbox(label="Translated text")
-
-    gr.Examples(
-        examples=[],
-        inputs=[input_audio, source_language, target_language],
-        outputs=[output_audio, output_text],
-        fn=run,
-        cache_examples=CACHE_EXAMPLES,
-        api_name=False,
-    )
-
-    btn.click(
-        fn=run,
-        inputs=[input_audio, source_language, target_language],
-        outputs=[output_audio, output_text],
-        api_name="run",
-    )
-
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='TTS parameters')
     parser.add_argument('--i', type=str, default="/app/input_audio.wav")
@@ -306,4 +253,5 @@ if __name__ == "__main__":
     parser.add_argument('--s', type=str, default="fre")
     args = parser.parse_args()
 
+    print("begin of rune:")
     run(args.i, args.t, args.s)

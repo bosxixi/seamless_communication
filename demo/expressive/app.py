@@ -260,7 +260,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='parameters')
     parser.add_argument('--i', type=str, default="/app/input_audio.wav")
     parser.add_argument('--t', type=str, default="cmn")
-    parser.add_argument('--s', type=str, default="fra")
+    parser.add_argument('--s', type=str, default="eng")
     args = parser.parse_args()
 
     print("begin of run:")
